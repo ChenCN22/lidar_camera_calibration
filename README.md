@@ -55,6 +55,8 @@ cloud and intensity image of each bag, `guess` gives the initial transform, `cal
 cloud coloured by the image. `HEADLESS=1` opens no windows (`calibrate` still needs an X display, Xvfb is enough).
 
 Result: `<result_dir>/calib.json`, `T_lidar_camera = [x y z qx qy qz qw]`, the camera pose in the lidar frame.
+[lidar_camera_fusion](https://github.com/ChenCN22/lidar_camera_fusion) reads this file and shows the lidar points on the
+live image and the cloud coloured by the camera.
 
 ## 4. Camera pose in the robot body frame (optional)
 
@@ -82,6 +84,8 @@ Results:
 | `2026-04-05_lab_front` | 3 x 30 s | -0.030, 0.018, 0.130 |
 | `2026-04-08_mount_v1_front` | 4 | -0.036, 0.008, 0.154 |
 | `2026-06-03_mount_v2_front` | 3 | 0.006, 0.070, 0.134 |
+| `2026-08-20_front` | 7 | -0.074, 0.146, 0.122 |
+| `2026-08-20_back` | front result + lens-to-lens transform | 0.020, 0.145, 0.124 |
 
 
 ## Licences

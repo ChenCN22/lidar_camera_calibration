@@ -123,6 +123,14 @@ Result: `/tmp/preprocessed/calib.json`.
 | [`2026-04-05_lab_front`](2026-04-05_lab_front/calib.json) | 3 x 30 s | `/image`, `/camera_info` | as above | -0.030, 0.018, 0.130 |
 | [`2026-04-08_mount_v1_front`](2026-04-08_mount_v1_front/calib.json) | 4 | `/image`, `/camera_info` | as above | -0.036, 0.008, 0.154 |
 | [`2026-06-03_mount_v2_front`](2026-06-03_mount_v2_front/calib.json) | 3 | `/camera_front`, `/camera_info_omnidir` | `622.768,619.839,723.514,726.569,0.5736` / `-0.2105,0.0327867,-0.0004916508,-0.0003278793` | 0.006, 0.070, 0.134 |
+| [`2026-08-20_front`](2026-08-20_front/calib.json) | 7 | `/camera_front`, `/camera_info_omnidir` | as above | -0.074, 0.146, 0.122 |
+| [`2026-08-20_back`](2026-08-20_back/calib.json) | none (derived) | `/camera_back` | `686.550382,686.716121,723.538868,718.861953,0.747770` / `-0.192760,0.021535,0.000048,-0.000775` | 0.020, 0.145, 0.124 |
+
+The back lens was not registered on its own: `2026-08-20_back` is the front result composed with the front-to-back lens
+transform (180 deg about the camera Y axis, 94.3 mm baseline), refined by edge alignment on the same seven bags; see the
+`meta.note` in the file. The 08/20 pair is the one used on the robot and in the example of
+[lidar_camera_fusion](https://github.com/ChenCN22/lidar_camera_fusion), which draws the lidar points on the live images
+and colours the cloud with a `calib.json`.
 
 Re-running the 04/05 bags with `scripts/calibrate_in_container.sh` (2026-11-12): preprocess 2.5 min for the three
 bags; SuperGlue + RANSAC kept 17 of 275 matches and the initial guess was 9.6 deg / 0.26 m from the stored result;

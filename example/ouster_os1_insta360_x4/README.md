@@ -110,7 +110,7 @@ ros2 run direct_visual_lidar_calibration initial_guess_auto /tmp/preprocessed --
 ## 6. Refine and inspect
 
 ```
-ros2 run direct_visual_lidar_calibration calibrate /tmp/preprocessed
+ros2 run direct_visual_lidar_calibration calibrate /tmp/preprocessed 
 ros2 run direct_visual_lidar_calibration viewer /tmp/preprocessed
 ```
 

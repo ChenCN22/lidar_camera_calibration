@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""Turn a koide3 calib.json into the map_manager `body_to_color_sensor_*` 4x4 (row-major).
+"""Chain a calib.json with a body-to-lidar mounting to get the 4x4 camera pose in the robot body frame.
 
-  calib_to_body_extrinsic.py results/2026-06-03_mount_v2_front/calib.json \
-      --body_to_lidar 0.45 0 0.43 --lidar_yaw_deg 180 [--compare <16 floats>]
+  calib_to_body_extrinsic.py calib.json --body_to_lidar X Y Z [--lidar_yaw_deg YAW] [--compare <16 floats>]
 
-T_lidar_camera in calib.json is [x y z qx qy qz qw]: camera pose in the lidar frame of the
-recorded cloud (OpenCV camera axes, z forward). body_to_color_sensor = T_body_lidar * R_z(yaw) * T_lidar_camera,
-where T_body_lidar is the planner's `body_to_range_sensor` translation and yaw corrects for a cloud
-recorded in a frame rotated against the body-aligned lidar frame (Ouster os_lidar vs os_sensor: 180 deg).
+T_lidar_camera in calib.json is [x y z qx qy qz qw]: camera pose in the frame of the recorded cloud
+(OpenCV camera axes, z forward). T_body_camera = T_body_lidar * R_z(yaw) * T_lidar_camera, where yaw is the
+rotation of the recorded cloud frame against the body-aligned lidar frame (0 if they coincide).
 """
 import argparse, json, math, sys
 
@@ -31,11 +29,11 @@ def homog(r, t):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("calib_json")
-    ap.add_argument("--body_to_lidar", nargs=3, type=float, default=[0.45, 0.0, 0.43], metavar=("X", "Y", "Z"),
-                    help="lidar origin in the body frame (planner body_to_range_sensor translation)")
-    ap.add_argument("--lidar_yaw_deg", type=float, default=180.0,
+    ap.add_argument("--body_to_lidar", nargs=3, type=float, default=[0.0, 0.0, 0.0], metavar=("X", "Y", "Z"),
+                    help="lidar origin in the body frame (m)")
+    ap.add_argument("--lidar_yaw_deg", type=float, default=0.0,
                     help="yaw of the recorded cloud frame relative to the body-aligned lidar frame")
-    ap.add_argument("--compare", nargs=16, type=float, help="deployed 16 floats to diff against")
+    ap.add_argument("--compare", nargs=16, type=float, help="existing 16 row-major floats to diff against")
     a = ap.parse_args()
     v = json.load(open(a.calib_json))["results"]["T_lidar_camera"]
     t_lc = homog(quat_to_mat(*v[3:7]), v[0:3])
@@ -44,13 +42,13 @@ def main():
     t_bl = homog([[1.0, 0.0, 0.0], [0.0, 1.0, 0.0], [0.0, 0.0, 1.0]], a.body_to_lidar)
     m = matmul(matmul(t_bl, r_yaw), t_lc)
     flat = [x for row in m for x in row]
-    print("body_to_color_sensor: [" + ", ".join("%.6f" % x for x in flat) + "]")
+    print("T_body_camera (row-major): [" + ", ".join("%.6f" % x for x in flat) + "]")
     print("camera position in body (m): %.3f %.3f %.3f" % (m[0][3], m[1][3], m[2][3]))
     print("camera optical axis in body: %.3f %.3f %.3f" % (m[0][2], m[1][2], m[2][2]))
     if a.compare:
         d_rot = max(abs(flat[i] - a.compare[i]) for i in range(16) if i % 4 != 3 and i < 12)
         d_t = [flat[i] - a.compare[i] for i in (3, 7, 11)]
-        print("vs deployed: max rotation-entry diff %.4f, translation diff (m) %.3f %.3f %.3f" % (d_rot, *d_t))
+        print("vs --compare: max rotation-entry diff %.4f, translation diff (m) %.3f %.3f %.3f" % (d_rot, *d_t))
     return 0
 
 

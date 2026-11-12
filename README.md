@@ -52,7 +52,7 @@ scripts/run_calibration_container.sh my_rig.env <bag_dir> <result_dir> [humble|j
 
 `setup` installs PyTorch and clones SuperGlue (skipped for `INITIAL_GUESS=manual`), `preprocess` builds the dense
 cloud and intensity image of each bag, `guess` gives the initial transform, `calibrate` refines it, `viewer` shows the
-cloud coloured by the image. `HEADLESS=1` runs without GUI windows.
+cloud coloured by the image. `HEADLESS=1` opens no windows (`calibrate` still needs an X display, Xvfb is enough).
 
 Result: `<result_dir>/calib.json`, `T_lidar_camera = [x y z qx qy qz qw]`, the camera pose in the lidar frame.
 

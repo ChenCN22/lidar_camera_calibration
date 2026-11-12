@@ -1,0 +1,5 @@
+build/
+devel/
+install/
+*.bak*
+__pycache__/

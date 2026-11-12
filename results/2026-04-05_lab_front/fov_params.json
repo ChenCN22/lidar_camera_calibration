@@ -1,0 +1,16 @@
+{
+  "cam_upper_arc_cx": 720,
+  "cam_upper_arc_cy": 220,
+  "cam_upper_arc_radius": 1000,
+  "cam_lower_arc_cx": 720,
+  "cam_lower_arc_cy": 1160,
+  "cam_lower_arc_radius": 1000,
+  "lidar_y_top": 106,
+  "lidar_y_bottom": 720,
+  "lidar_x_left": 0,
+  "lidar_x_right": 1014,
+  "lidar_elev_top_deg": 70.125,
+  "lidar_elev_bot_deg": -45.0,
+  "lidar_azim_left_deg": -180.0,
+  "lidar_azim_right_deg": 10.125
+}

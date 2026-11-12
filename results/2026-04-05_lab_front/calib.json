@@ -1,0 +1,50 @@
+{
+  "camera": {
+    "camera_model": "omnidir",
+    "distortion_coeffs": [
+      -0.190037,
+      0.020269,
+      -0.000258,
+      -0.001424
+    ],
+    "intrinsics": [
+      687.344052,
+      687.263911,
+      728.273899,
+      722.792744,
+      0.752012
+    ]
+  },
+  "meta": {
+    "bag_names": [
+      "ouster_insta360_calibration_0",
+      "ouster_insta360_calibration_1",
+      "ouster_insta360_calibration_2"
+    ],
+    "camera_info_topic": "/camera_info",
+    "data_path": "/tmp/input_bags/",
+    "image_topic": "/image",
+    "intensity_channel": "reflectivity",
+    "points_topic": "/ouster/points"
+  },
+  "results": {
+    "T_lidar_camera": [
+      -0.030238788602483108,
+      0.01757628641696652,
+      0.1303111708378752,
+      -0.47014197270469155,
+      -0.5283766506448221,
+      0.5314927542943302,
+      0.4661545802492209
+    ],
+    "init_T_lidar_camera_auto": [
+      -0.021339130095930643,
+      0.01782680846695707,
+      0.12265048928410596,
+      -0.46877588614397264,
+      -0.5278905775194762,
+      0.5327673075769731,
+      0.4666258701714576
+    ]
+  }
+}

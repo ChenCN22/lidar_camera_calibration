@@ -65,6 +65,7 @@ scripts/calib_to_body_extrinsic.py <result_dir>/calib.json --body_to_lidar X Y Z
 ## Example: Ouster OS-1-128 + Insta360 X4
 
 Files in `example/ouster_os1_insta360_x4/`, config `example/ouster_os1_insta360_x4/rig.env`.
+Step-by-step commands and parameters: [example/ouster_os1_insta360_x4/README.md](example/ouster_os1_insta360_x4/README.md).
 
 Sensor drivers are NOT included in this repo.
 
